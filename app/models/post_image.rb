@@ -5,6 +5,14 @@ belongs_to:user
 has_many :post_comments, dependent: :destroy
 has_many :favorites, dependent: :destroy
 
+validates :shop_name,presence:true
+validates :image,presence:true
+validates :address, presence: true
+
+
+geocoded_by :address
+after_validation :geocode
+
 
  def get_image(width,height)
   unless image.attached?
@@ -18,7 +26,6 @@ has_many :favorites, dependent: :destroy
     favorites.exists?(user_id: user.id)
  end
 
- validates :shop_name,presence:true
- validates :image,presence:true
+
 
 end
